@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>JSON Builder</title>
+</head>
+<body>
+  <h1>JSON Builder</h1>
+
+  <label>
+    Widget type
+    <select id="type">
+      <option value="optimizelyCarousel">Optimizely Carousel</option>
+      <option value="optimizelyAsset">Optimizely Asset</option>
+    </select>
+  </label>
+
+  <br><br>
+
+  <label>
+    Position
+    <input id="position" placeholder="cart-cross-sell" />
+  </label>
+
+  <br><br>
+
+  <label>
+    Enable color selection
+    <input id="enableColorSelection" type="checkbox" />
+  </label>
+
+  <br><br>
+
+  <button id="generate">Generate JSON</button>
+  <button id="copy">Copy</button>
+
+  <pre id="output"></pre>
+
+  <script>
+    const output = document.getElementById('output');
+
+    document.getElementById('generate').addEventListener('click', function () {
+      const json = {
+        type: document.getElementById('type').value,
+        position: document.getElementById('position').value,
+        enableColorSelection: document.getElementById('enableColorSelection').checked
+      };
+
+      output.textContent = JSON.stringify(json, null, 4);
+    });
+
+    document.getElementById('copy').addEventListener('click', function () {
+      navigator.clipboard.writeText(output.textContent);
+    });
+  </script>
+</body>
+</html>
