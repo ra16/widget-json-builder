@@ -1,57 +1,510 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>JSON Builder</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JSON Builder</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f6f8fb;
+            color: #172033;
+        }
+
+        .app {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 32px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .brand__icon {
+            color: #16833a;
+            font-size: 34px;
+            font-weight: 700;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        .header p,
+        .card > p,
+        small {
+            color: #64748b;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            gap: 24px;
+            margin-top: 28px;
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid #dbe3ee;
+            border-radius: 14px;
+            padding: 24px;
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.04);
+        }
+
+        h2 {
+            margin: 0 0 6px;
+            font-size: 20px;
+        }
+
+        .field {
+            margin-top: 22px;
+        }
+
+        label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            border: 1px solid #d8e1ec;
+            border-radius: 8px;
+            padding: 13px 14px;
+            font-size: 15px;
+            background: #fff;
+            color: #172033;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #16833a;
+            box-shadow: 0 0 0 3px rgba(22, 131, 58, 0.12);
+        }
+
+        textarea {
+            min-height: 86px;
+            resize: vertical;
+        }
+
+        small {
+            display: block;
+            margin-top: 8px;
+            font-size: 13px;
+        }
+
+        .required,
+        .required-note span {
+            color: #e03131;
+        }
+
+        .info {
+            position: relative;
+            width: 18px;
+            height: 18px;
+            border: 1px solid #91a4b8;
+            border-radius: 50%;
+            background: #fff;
+            color: #60758b;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: help;
+        }
+
+        .info:hover::after,
+        .info:focus::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            left: 24px;
+            top: -12px;
+            z-index: 5;
+            width: 240px;
+            padding: 12px;
+            border-radius: 8px;
+            background: #172033;
+            color: #fff;
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 1.4;
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.24);
+        }
+
+        .switch {
+            display: flex;
+            gap: 10px;
+            font-weight: 400;
+            color: #64748b;
+            cursor: pointer;
+        }
+
+        .switch input {
+            display: none;
+        }
+
+        .switch span {
+            width: 44px;
+            height: 24px;
+            border-radius: 999px;
+            background: #cbd5e1;
+            position: relative;
+            flex: 0 0 auto;
+        }
+
+        .switch span::before {
+            content: "";
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #fff;
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            transition: 0.2s;
+        }
+
+        .switch input:checked + span {
+            background: #16833a;
+        }
+
+        .switch input:checked + span::before {
+            transform: translateX(20px);
+        }
+
+        .generate {
+            width: 100%;
+            margin-top: 28px;
+            border: 0;
+            border-radius: 8px;
+            padding: 15px;
+            background: #16833a;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .generate:hover {
+            background: #126d31;
+        }
+
+        .required-note {
+            margin: 16px 0 0;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .output__header {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .copy {
+            align-self: start;
+            border: 1px solid #d8e1ec;
+            border-radius: 8px;
+            padding: 10px 12px;
+            background: #fff;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .copy:hover {
+            border-color: #16833a;
+            color: #16833a;
+        }
+
+        .code {
+            min-height: 560px;
+            margin: 24px 0 0;
+            padding: 24px;
+            border: 1px solid #d8e1ec;
+            border-radius: 10px;
+            background: #fbfdff;
+            overflow: auto;
+            font-family: Consolas, Monaco, monospace;
+            font-size: 15px;
+            line-height: 1.7;
+            white-space: pre;
+        }
+
+        .copy-message {
+            margin-top: 12px;
+            color: #16833a;
+            font-size: 13px;
+            min-height: 18px;
+        }
+
+        .error {
+            border-color: #e03131;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        @media (max-width: 850px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            .app {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-  <h1>JSON Builder</h1>
+    <main class="app">
+        <header class="header">
+            <div class="brand">
+                <span class="brand__icon">{ }</span>
+                <div>
+                    <h1>JSON Builder</h1>
+                    <p>Configure your widget options and generate the JSON payload.</p>
+                </div>
+            </div>
+        </header>
 
-  <label>
-    Widget type
-    <select id="type">
-      <option value="optimizelyCarousel">Optimizely Carousel</option>
-      <option value="optimizelyAsset">Optimizely Asset</option>
-    </select>
-  </label>
+        <section class="layout">
+            <form class="card" id="jsonForm">
+                <h2>Widget Configuration</h2>
+                <p>Fill in the fields below to build your JSON.</p>
 
-  <br><br>
+                <div class="field">
+                    <label for="type">
+                        Widget Type
+                        <button class="info" type="button" data-tooltip="The recommendation widget type used by the backend.">i</button>
+                        <span class="required">*</span>
+                    </label>
+                    <select id="type" required>
+                        <option value="optimizelyCarousel">Optimizely Carousel</option>
+                        <option value="optimizelyAsset">Optimizely Asset</option>
+                    </select>
+                    <small>The widget type determines the generated JSON structure.</small>
+                </div>
 
-  <label>
-    Position
-    <input id="position" placeholder="cart-cross-sell" />
-  </label>
+                <div class="field">
+                    <label for="position">
+                        Position
+                        <button class="info" type="button" data-tooltip="The Optimizely position or slot where the widget will be displayed.">i</button>
+                        <span class="required">*</span>
+                    </label>
+                    <input id="position" type="text" value="cart-cross-sell" required />
+                    <small>The position where the widget will be displayed.</small>
+                </div>
 
-  <br><br>
+                <div class="field">
+                    <label for="widgetFormat">
+                        Widget Format
+                        <button class="info" type="button" data-tooltip="Choose whether this JSON should configure a carousel or a content asset.">i</button>
+                        <span class="required">*</span>
+                    </label>
+                    <select id="widgetFormat" required>
+                        <option value="carousel">Carousel</option>
+                        <option value="asset">Asset</option>
+                    </select>
+                </div>
 
-  <label>
-    Enable color selection
-    <input id="enableColorSelection" type="checkbox" />
-  </label>
+                <div id="carouselFields">
+                    <div class="field">
+                        <label for="displayedItems">
+                            Displayed Items
+                            <button class="info" type="button" data-tooltip="Number of items visible at once.">i</button>
+                            <span class="required">*</span>
+                        </label>
+                        <input id="displayedItems" type="number" value="4" min="1" required />
+                    </div>
 
-  <br><br>
+                    <div class="field">
+                        <label for="maxItems">
+                            Max Items
+                            <button class="info" type="button" data-tooltip="Maximum number of items returned or used by the carousel.">i</button>
+                            <span class="required">*</span>
+                        </label>
+                        <input id="maxItems" type="number" value="12" min="1" required />
+                        <small>Carousel type will be generated as displayedItems x maxItems, for example 4x12.</small>
+                    </div>
+                </div>
 
-  <button id="generate">Generate JSON</button>
-  <button id="copy">Copy</button>
+                <div id="assetFields" hidden>
+                    <div class="field">
+                        <label for="asset">
+                            Content Asset ID
+                            <button class="info" type="button" data-tooltip="The SFCC content asset ID used for this widget.">i</button>
+                            <span class="required">*</span>
+                        </label>
+                        <input id="asset" type="text" placeholder="cart-product-cross-sell-widget" />
+                        <small>This value fills the asset property in the generated JSON.</small>
+                    </div>
+                </div>
 
-  <pre id="output"></pre>
+                <div class="field">
+                    <label>
+                        Enable Color Selection
+                        <button class="info" type="button" data-tooltip="Allows customers to select product colors before adding to cart.">i</button>
+                        <span class="required">*</span>
+                    </label>
 
-  <script>
-    const output = document.getElementById('output');
+                    <label class="switch">
+                        <input id="enableColorSelection" type="checkbox" checked />
+                        <span></span>
+                        Allow customers to select product colors.
+                    </label>
+                </div>
 
-    document.getElementById('generate').addEventListener('click', function () {
-      const json = {
-        type: document.getElementById('type').value,
-        position: document.getElementById('position').value,
-        enableColorSelection: document.getElementById('enableColorSelection').checked
-      };
+                <div class="field">
+                    <label for="title">
+                        Title
+                        <button class="info" type="button" data-tooltip="The title displayed above the widget.">i</button>
+                        <span class="required">*</span>
+                    </label>
+                    <input id="title" type="text" value="You may also like" required />
+                    <small>The title displayed above the widget.</small>
+                </div>
 
-      output.textContent = JSON.stringify(json, null, 4);
-    });
+                <div class="field">
+                    <label for="description">
+                        Description
+                        <button class="info" type="button" data-tooltip="Optional description text shown near the widget.">i</button>
+                    </label>
+                    <textarea id="description">Recommended products based on your cart.</textarea>
+                    <small>Optional description text for the widget.</small>
+                </div>
 
-    document.getElementById('copy').addEventListener('click', function () {
-      navigator.clipboard.writeText(output.textContent);
-    });
-  </script>
+                <button class="generate" type="submit">&lt;&gt; Generate JSON</button>
+
+                <p class="required-note"><span>*</span> Required fields</p>
+            </form>
+
+            <section class="card">
+                <div class="output__header">
+                    <div>
+                        <h2>Generated JSON</h2>
+                        <p>Copy the JSON below to use in your application.</p>
+                    </div>
+
+                    <button class="copy" id="copyButton" type="button" title="Copy JSON">⧉</button>
+                </div>
+
+                <pre class="code"><code id="jsonOutput">{}</code></pre>
+                <div class="copy-message" id="copyMessage"></div>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const form = document.getElementById('jsonForm');
+        const output = document.getElementById('jsonOutput');
+        const copyButton = document.getElementById('copyButton');
+        const copyMessage = document.getElementById('copyMessage');
+
+        const widgetFormat = document.getElementById('widgetFormat');
+        const carouselFields = document.getElementById('carouselFields');
+        const assetFields = document.getElementById('assetFields');
+        const displayedItems = document.getElementById('displayedItems');
+        const maxItems = document.getElementById('maxItems');
+        const asset = document.getElementById('asset');
+
+        function getValue(id) {
+            return document.getElementById(id).value.trim();
+        }
+
+        function setFormatFields() {
+            const isCarousel = widgetFormat.value === 'carousel';
+
+            carouselFields.hidden = !isCarousel;
+            assetFields.hidden = isCarousel;
+
+            displayedItems.required = isCarousel;
+            maxItems.required = isCarousel;
+            asset.required = !isCarousel;
+        }
+
+        function buildJson() {
+            const json = {
+                type: getValue('type'),
+                position: getValue('position'),
+                enableColorSelection: document.getElementById('enableColorSelection').checked,
+                content: {
+                    title: getValue('title'),
+                    description: getValue('description')
+                }
+            };
+
+            if (widgetFormat.value === 'carousel') {
+                json.carouselType = getValue('displayedItems') + 'x' + getValue('maxItems');
+            } else {
+                json.asset = getValue('asset');
+            }
+
+            return json;
+        }
+
+        function validateRequiredFields() {
+            const requiredFields = form.querySelectorAll('[required]');
+            let isValid = true;
+
+            requiredFields.forEach(function (field) {
+                field.classList.remove('error');
+
+                if (!field.closest('[hidden]') && !field.value.trim()) {
+                    field.classList.add('error');
+                    isValid = false;
+                }
+            });
+
+            return isValid;
+        }
+
+        function renderJson() {
+            if (!validateRequiredFields()) {
+                output.textContent = 'Please fill in all required fields.';
+                return;
+            }
+
+            output.textContent = JSON.stringify(buildJson(), null, 4);
+        }
+
+        widgetFormat.addEventListener('change', function () {
+            setFormatFields();
+            renderJson();
+        });
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            renderJson();
+        });
+
+        copyButton.addEventListener('click', function () {
+            navigator.clipboard.writeText(output.textContent).then(function () {
+                copyMessage.textContent = 'JSON copied to clipboard.';
+
+                setTimeout(function () {
+                    copyMessage.textContent = '';
+                }, 1800);
+            });
+        });
+
+        setFormatFields();
+        renderJson();
+    </script>
 </body>
 </html>
