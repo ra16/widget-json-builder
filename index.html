@@ -6,9 +6,7 @@
     <title>JSON Builder</title>
 
     <style>
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
         body {
             margin: 0;
@@ -35,16 +33,11 @@
             font-weight: 700;
         }
 
-        h1 {
-            margin: 0;
-            font-size: 32px;
-        }
+        h1 { margin: 0; font-size: 32px; }
 
         .header p,
         .card > p,
-        small {
-            color: #64748b;
-        }
+        small { color: #64748b; }
 
         .layout {
             display: grid;
@@ -66,9 +59,7 @@
             font-size: 20px;
         }
 
-        .field {
-            margin-top: 22px;
-        }
+        .field { margin-top: 22px; }
 
         label {
             display: inline-flex;
@@ -79,8 +70,7 @@
         }
 
         input,
-        select,
-        textarea {
+        select {
             width: 100%;
             border: 1px solid #d8e1ec;
             border-radius: 8px;
@@ -91,16 +81,10 @@
         }
 
         input:focus,
-        select:focus,
-        textarea:focus {
+        select:focus {
             outline: none;
             border-color: #16833a;
             box-shadow: 0 0 0 3px rgba(22, 131, 58, 0.12);
-        }
-
-        textarea {
-            min-height: 86px;
-            resize: vertical;
         }
 
         small {
@@ -110,9 +94,7 @@
         }
 
         .required,
-        .required-note span {
-            color: #e03131;
-        }
+        .required-note span { color: #e03131; }
 
         .info {
             position: relative;
@@ -153,9 +135,7 @@
             cursor: pointer;
         }
 
-        .switch input {
-            display: none;
-        }
+        .switch input { display: none; }
 
         .switch span {
             width: 44px;
@@ -178,9 +158,7 @@
             transition: 0.2s;
         }
 
-        .switch input:checked + span {
-            background: #16833a;
-        }
+        .switch input:checked + span { background: #16833a; }
 
         .switch input:checked + span::before {
             transform: translateX(20px);
@@ -199,9 +177,7 @@
             cursor: pointer;
         }
 
-        .generate:hover {
-            background: #126d31;
-        }
+        .generate:hover { background: #126d31; }
 
         .required-note {
             margin: 16px 0 0;
@@ -251,22 +227,13 @@
             min-height: 18px;
         }
 
-        .error {
-            border-color: #e03131;
-        }
+        .error { border-color: #e03131; }
 
-        [hidden] {
-            display: none !important;
-        }
+        [hidden] { display: none !important; }
 
         @media (max-width: 850px) {
-            .layout {
-                grid-template-columns: 1fr;
-            }
-
-            .app {
-                padding: 20px;
-            }
+            .layout { grid-template-columns: 1fr; }
+            .app { padding: 20px; }
         }
     </style>
 </head>
@@ -289,26 +256,54 @@
                 <p>Fill in the fields below to build your JSON.</p>
 
                 <div class="field">
-                    <label for="type">
-                        Widget Type
-                        <button class="info" type="button" data-tooltip="The recommendation widget type used by the backend.">i</button>
-                        <span class="required">*</span>
-                    </label>
-                    <select id="type" required>
-                        <option value="optimizelyCarousel">Optimizely Carousel</option>
-                        <option value="optimizelyAsset">Optimizely Asset</option>
-                    </select>
-                    <small>The widget type determines the generated JSON structure.</small>
-                </div>
-
-                <div class="field">
                     <label for="position">
                         Position
-                        <button class="info" type="button" data-tooltip="The Optimizely position or slot where the widget will be displayed.">i</button>
+                        <button class="info" type="button" data-tooltip="The base widget position. Country suffix will be appended automatically when provided.">i</button>
                         <span class="required">*</span>
                     </label>
                     <input id="position" type="text" value="cart-cross-sell" required />
-                    <small>The position where the widget will be displayed.</small>
+                </div>
+
+                <div class="field">
+                    <label for="countrySuffix">
+                        Country Suffix
+                        <button class="info" type="button" data-tooltip="Optional two-letter country code appended to the widget position. Example: CA.">i</button>
+                    </label>
+                    <input id="countrySuffix" type="text" maxlength="2" placeholder="CA" />
+                    <small>Optional two-letter country code.</small>
+                </div>
+
+                <div id="localeFields" hidden>
+                    <div class="field">
+                        <label for="additionalLocales">
+                            Additional Locales
+                            <button class="info" type="button" data-tooltip="Optional localized fields to include in the generated JSON.">i</button>
+                        </label>
+                        <select id="additionalLocales">
+                            <option value="">None</option>
+                            <option value="fr">fr</option>
+                        </select>
+                    </div>
+
+                    <div id="frFields" hidden>
+                        <div class="field">
+                            <label for="titleFrCa">
+                                Title fr-ca
+                                <button class="info" type="button" data-tooltip="French Canadian localized title.">i</button>
+                            </label>
+                            <input id="titleFrCa" type="text" maxlength="120" />
+                            <small>Maximum 120 characters.</small>
+                        </div>
+
+                        <div class="field">
+                            <label for="subtitleFrCa">
+                                Subtitle fr-ca
+                                <button class="info" type="button" data-tooltip="French Canadian localized subtitle.">i</button>
+                            </label>
+                            <input id="subtitleFrCa" type="text" maxlength="120" />
+                            <small>Maximum 120 characters.</small>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="field">
@@ -352,7 +347,6 @@
                             <span class="required">*</span>
                         </label>
                         <input id="asset" type="text" placeholder="cart-product-cross-sell-widget" />
-                        <small>This value fills the asset property in the generated JSON.</small>
                     </div>
                 </div>
 
@@ -376,17 +370,17 @@
                         <button class="info" type="button" data-tooltip="The title displayed above the widget.">i</button>
                         <span class="required">*</span>
                     </label>
-                    <input id="title" type="text" value="You may also like" required />
-                    <small>The title displayed above the widget.</small>
+                    <input id="title" type="text" value="You may also like" maxlength="120" required />
+                    <small>Required. Maximum 120 characters.</small>
                 </div>
 
                 <div class="field">
-                    <label for="description">
-                        Description
-                        <button class="info" type="button" data-tooltip="Optional description text shown near the widget.">i</button>
+                    <label for="subtitle">
+                        Subtitle
+                        <button class="info" type="button" data-tooltip="Optional subtitle displayed below the title.">i</button>
                     </label>
-                    <textarea id="description">Recommended products based on your cart.</textarea>
-                    <small>Optional description text for the widget.</small>
+                    <input id="subtitle" type="text" maxlength="120" />
+                    <small>Optional. Maximum 120 characters.</small>
                 </div>
 
                 <button class="generate" type="submit">&lt;&gt; Generate JSON</button>
@@ -423,8 +417,24 @@
         const maxItems = document.getElementById('maxItems');
         const asset = document.getElementById('asset');
 
+        const countrySuffix = document.getElementById('countrySuffix');
+        const localeFields = document.getElementById('localeFields');
+        const additionalLocales = document.getElementById('additionalLocales');
+        const frFields = document.getElementById('frFields');
+
         function getValue(id) {
             return document.getElementById(id).value.trim();
+        }
+
+        function normalizeCountrySuffix(value) {
+            return value.trim().toUpperCase();
+        }
+
+        function getResolvedPosition() {
+            const basePosition = getValue('position');
+            const suffix = normalizeCountrySuffix(countrySuffix.value);
+
+            return suffix ? basePosition + suffix : basePosition;
         }
 
         function setFormatFields() {
@@ -438,21 +448,52 @@
             asset.required = !isCarousel;
         }
 
+        function setLocaleFields() {
+            const hasCountrySuffix = normalizeCountrySuffix(countrySuffix.value).length > 0;
+            const isFrSelected = additionalLocales.value === 'fr';
+
+            localeFields.hidden = !hasCountrySuffix;
+            frFields.hidden = !hasCountrySuffix || !isFrSelected;
+
+            if (!hasCountrySuffix) {
+                additionalLocales.value = '';
+            }
+        }
+
         function buildJson() {
             const json = {
-                type: getValue('type'),
-                position: getValue('position'),
+                widgetFormat: getValue('widgetFormat'),
+                position: getResolvedPosition(),
                 enableColorSelection: document.getElementById('enableColorSelection').checked,
-                content: {
-                    title: getValue('title'),
-                    description: getValue('description')
-                }
+                title: getValue('title')
             };
+
+            const subtitle = getValue('subtitle');
+            const titleFrCa = getValue('titleFrCa');
+            const subtitleFrCa = getValue('subtitleFrCa');
+
+            if (subtitle) {
+                json.subtitle = subtitle;
+            }
 
             if (widgetFormat.value === 'carousel') {
                 json.carouselType = getValue('displayedItems') + 'x' + getValue('maxItems');
             } else {
                 json.asset = getValue('asset');
+            }
+
+            if (countrySuffix.value.trim()) {
+                json.countrySuffix = normalizeCountrySuffix(countrySuffix.value);
+            }
+
+            if (additionalLocales.value === 'fr') {
+                if (titleFrCa) {
+                    json.title_fr_CA = titleFrCa;
+                }
+
+                if (subtitleFrCa) {
+                    json.subtitle_fr_CA = subtitleFrCa;
+                }
             }
 
             return json;
@@ -471,20 +512,33 @@
                 }
             });
 
+            countrySuffix.classList.remove('error');
+
+            if (countrySuffix.value.trim() && !/^[a-zA-Z]{2}$/.test(countrySuffix.value.trim())) {
+                countrySuffix.classList.add('error');
+                isValid = false;
+            }
+
             return isValid;
         }
 
         function renderJson() {
+            setFormatFields();
+            setLocaleFields();
+
             if (!validateRequiredFields()) {
-                output.textContent = 'Please fill in all required fields.';
+                output.textContent = 'Please fill in all required fields and use a valid two-letter country suffix.';
                 return;
             }
 
             output.textContent = JSON.stringify(buildJson(), null, 4);
         }
 
-        widgetFormat.addEventListener('change', function () {
-            setFormatFields();
+        widgetFormat.addEventListener('change', renderJson);
+        countrySuffix.addEventListener('input', renderJson);
+        additionalLocales.addEventListener('change', renderJson);
+
+        form.addEventListener('input', function () {
             renderJson();
         });
 
@@ -503,7 +557,6 @@
             });
         });
 
-        setFormatFields();
         renderJson();
     </script>
 </body>
