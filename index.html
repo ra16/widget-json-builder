@@ -1,12 +1,15 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>JSON Builder</title>
 
     <style>
-        * { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+        }
 
         body {
             margin: 0;
@@ -33,11 +36,16 @@
             font-weight: 700;
         }
 
-        h1 { margin: 0; font-size: 32px; }
+        h1 {
+            margin: 0;
+            font-size: 32px;
+        }
 
         .header p,
-        .card > p,
-        small { color: #64748b; }
+        .card>p,
+        small {
+            color: #64748b;
+        }
 
         .layout {
             display: grid;
@@ -59,7 +67,9 @@
             font-size: 20px;
         }
 
-        .field { margin-top: 22px; }
+        .field {
+            margin-top: 22px;
+        }
 
         label {
             display: inline-flex;
@@ -94,7 +104,9 @@
         }
 
         .required,
-        .required-note span { color: #e03131; }
+        .required-note span {
+            color: #e03131;
+        }
 
         .info {
             position: relative;
@@ -135,7 +147,9 @@
             cursor: pointer;
         }
 
-        .switch input { display: none; }
+        .switch input {
+            display: none;
+        }
 
         .switch span {
             width: 44px;
@@ -158,9 +172,11 @@
             transition: 0.2s;
         }
 
-        .switch input:checked + span { background: #16833a; }
+        .switch input:checked+span {
+            background: #16833a;
+        }
 
-        .switch input:checked + span::before {
+        .switch input:checked+span::before {
             transform: translateX(20px);
         }
 
@@ -177,7 +193,9 @@
             cursor: pointer;
         }
 
-        .generate:hover { background: #126d31; }
+        .generate:hover {
+            background: #126d31;
+        }
 
         .required-note {
             margin: 16px 0 0;
@@ -227,13 +245,22 @@
             min-height: 18px;
         }
 
-        .error { border-color: #e03131; }
+        .error {
+            border-color: #e03131;
+        }
 
-        [hidden] { display: none !important; }
+        [hidden] {
+            display: none !important;
+        }
 
         @media (max-width: 850px) {
-            .layout { grid-template-columns: 1fr; }
-            .app { padding: 20px; }
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            .app {
+                padding: 20px;
+            }
         }
     </style>
 </head>
@@ -258,7 +285,8 @@
                 <div class="field">
                     <label for="position">
                         Position
-                        <button class="info" type="button" data-tooltip="The base widget position. Country suffix will be appended automatically when provided.">i</button>
+                        <button class="info" type="button"
+                            data-tooltip="The base widget position. Country suffix will be appended automatically when provided.">i</button>
                         <span class="required">*</span>
                     </label>
                     <input id="position" type="text" value="cart-cross-sell" required />
@@ -267,7 +295,8 @@
                 <div class="field">
                     <label for="countrySuffix">
                         Country Suffix
-                        <button class="info" type="button" data-tooltip="Optional two-letter country code appended to the widget position. Example: CA.">i</button>
+                        <button class="info" type="button"
+                            data-tooltip="Optional two-letter country code appended to the widget position. Example: CA.">i</button>
                     </label>
                     <input id="countrySuffix" type="text" maxlength="2" placeholder="CA" />
                     <small>Optional two-letter country code.</small>
@@ -277,7 +306,8 @@
                     <div class="field">
                         <label for="additionalLocales">
                             Additional Locales
-                            <button class="info" type="button" data-tooltip="Optional localized fields to include in the generated JSON.">i</button>
+                            <button class="info" type="button"
+                                data-tooltip="Optional localized fields to include in the generated JSON.">i</button>
                         </label>
                         <select id="additionalLocales">
                             <option value="">None</option>
@@ -289,7 +319,8 @@
                         <div class="field">
                             <label for="titleFrCa">
                                 Title fr-ca
-                                <button class="info" type="button" data-tooltip="French Canadian localized title.">i</button>
+                                <button class="info" type="button"
+                                    data-tooltip="French Canadian localized title.">i</button>
                             </label>
                             <input id="titleFrCa" type="text" maxlength="120" />
                             <small>Maximum 120 characters.</small>
@@ -298,7 +329,8 @@
                         <div class="field">
                             <label for="subtitleFrCa">
                                 Subtitle fr-ca
-                                <button class="info" type="button" data-tooltip="French Canadian localized subtitle.">i</button>
+                                <button class="info" type="button"
+                                    data-tooltip="French Canadian localized subtitle.">i</button>
                             </label>
                             <input id="subtitleFrCa" type="text" maxlength="120" />
                             <small>Maximum 120 characters.</small>
@@ -309,7 +341,8 @@
                 <div class="field">
                     <label for="widgetFormat">
                         Widget Format
-                        <button class="info" type="button" data-tooltip="Choose whether this JSON should configure a carousel or a content asset.">i</button>
+                        <button class="info" type="button"
+                            data-tooltip="Choose whether this JSON should configure a carousel or a content asset.">i</button>
                         <span class="required">*</span>
                     </label>
                     <select id="widgetFormat" required>
@@ -322,7 +355,8 @@
                     <div class="field">
                         <label for="displayedItems">
                             Displayed Items
-                            <button class="info" type="button" data-tooltip="Number of items visible at once.">i</button>
+                            <button class="info" type="button"
+                                data-tooltip="Number of items visible at once.">i</button>
                             <span class="required">*</span>
                         </label>
                         <input id="displayedItems" type="number" value="4" min="1" required />
@@ -331,7 +365,8 @@
                     <div class="field">
                         <label for="maxItems">
                             Max Items
-                            <button class="info" type="button" data-tooltip="Maximum number of items returned or used by the carousel.">i</button>
+                            <button class="info" type="button"
+                                data-tooltip="Maximum number of items returned or used by the carousel.">i</button>
                             <span class="required">*</span>
                         </label>
                         <input id="maxItems" type="number" value="12" min="1" required />
@@ -343,7 +378,8 @@
                     <div class="field">
                         <label for="asset">
                             Content Asset ID
-                            <button class="info" type="button" data-tooltip="The SFCC content asset ID used for this widget.">i</button>
+                            <button class="info" type="button"
+                                data-tooltip="The SFCC content asset ID used for this widget.">i</button>
                             <span class="required">*</span>
                         </label>
                         <input id="asset" type="text" placeholder="cart-product-cross-sell-widget" />
@@ -353,7 +389,8 @@
                 <div class="field">
                     <label>
                         Enable Color Selection
-                        <button class="info" type="button" data-tooltip="Allows customers to select product colors before adding to cart.">i</button>
+                        <button class="info" type="button"
+                            data-tooltip="Allows customers to select product colors before adding to cart.">i</button>
                         <span class="required">*</span>
                     </label>
 
@@ -367,7 +404,8 @@
                 <div class="field">
                     <label for="title">
                         Title
-                        <button class="info" type="button" data-tooltip="The title displayed above the widget.">i</button>
+                        <button class="info" type="button"
+                            data-tooltip="The title displayed above the widget.">i</button>
                         <span class="required">*</span>
                     </label>
                     <input id="title" type="text" value="You may also like" maxlength="120" required />
@@ -377,7 +415,8 @@
                 <div class="field">
                     <label for="subtitle">
                         Subtitle
-                        <button class="info" type="button" data-tooltip="Optional subtitle displayed below the title.">i</button>
+                        <button class="info" type="button"
+                            data-tooltip="Optional subtitle displayed below the title.">i</button>
                     </label>
                     <input id="subtitle" type="text" maxlength="120" />
                     <small>Optional. Maximum 120 characters.</small>
@@ -461,9 +500,9 @@
         }
 
         function buildJson() {
-            const json = {
-                widgetFormat: getValue('widgetFormat'),
-                position: getResolvedPosition(),
+            const positionKey = getResolvedPosition();
+
+            const widgetConfig = {
                 enableColorSelection: document.getElementById('enableColorSelection').checked,
                 title: getValue('title')
             };
@@ -473,30 +512,28 @@
             const subtitleFrCa = getValue('subtitleFrCa');
 
             if (subtitle) {
-                json.subtitle = subtitle;
+                widgetConfig.subtitle = subtitle;
             }
 
             if (widgetFormat.value === 'carousel') {
-                json.carouselType = getValue('displayedItems') + 'x' + getValue('maxItems');
+                widgetConfig.carouselType = getValue('displayedItems') + 'x' + getValue('maxItems');
             } else {
-                json.asset = getValue('asset');
-            }
-
-            if (countrySuffix.value.trim()) {
-                json.countrySuffix = normalizeCountrySuffix(countrySuffix.value);
+                widgetConfig.asset = getValue('asset');
             }
 
             if (additionalLocales.value === 'fr') {
                 if (titleFrCa) {
-                    json.title_fr_CA = titleFrCa;
+                    widgetConfig.title_fr_CA = titleFrCa;
                 }
 
                 if (subtitleFrCa) {
-                    json.subtitle_fr_CA = subtitleFrCa;
+                    widgetConfig.subtitle_fr_CA = subtitleFrCa;
                 }
             }
 
-            return json;
+            return {
+                [positionKey]: widgetConfig
+            };
         }
 
         function validateRequiredFields() {
@@ -560,4 +597,5 @@
         renderJson();
     </script>
 </body>
+
 </html>
